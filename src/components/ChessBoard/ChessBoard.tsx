@@ -69,107 +69,40 @@ export default function ChessBoard() {
     }
   }
 
-  const piece = (coordinate: string) => {
-    switch (coordinate) {
-      case "a1":
-      return "rook_w"
-
-      case "h1":
-      return "rook_w"
-
-      case "b1":
-      return "knight_w"
-      
-      case "g1":
-      return "knight_w"
-      
-      case "c1":
-      return "bishop_w"
-      
-      case "f1":
-      return "bishop_w"
-      
-      case "d1":
-      return "queen_w"
-      
-      case "e1":
-      return "king_w"
-      
-      case "a8":
-      return "rook_b"
-
-      case "h8":
-      return "rook_b"
-
-      case "b8":
-      return "knight_b"
-      
-      case "g8":
-      return "knight_b"
-      
-      case "c8":
-      return "bishop_b"
-      
-      case "f8":
-      return "bishop_b"
-      
-      case "d8":
-      return "queen_b"
-      
-      case "e8":
-      return "king_b"
-
-      case "a2":
-      return "pawn_w"
-
-      case "b2":
-      return "pawn_w"
-
-      case "c2":
-      return "pawn_w"
-
-      case "d2":
-      return "pawn_w"
-
-      case "e2":
-      return "pawn_w"
-
-      case "f2":
-      return "pawn_w"
-
-      case "g2":
-      return "pawn_w"
-
-      case "h2":
-      return "pawn_w"
-
-      ////////////////
-
-      case "a7":
-      return "pawn_b"
-
-      case "b7":
-      return "pawn_b"
-
-      case "c7":
-      return "pawn_b"
-
-      case "d7":
-      return "pawn_b"
-
-      case "e7":
-      return "pawn_b"
-
-      case "f7":
-      return "pawn_b"
-
-      case "g7":
-      return "pawn_b"
-
-      case "h7":
-      return "pawn_b"
-      
-    }
+  const piecePosition =
+  {  
+    a1: "url(/images/rook_w.png)",
+    h1: "url(/images/rook_w.png)",
+    b1: "url(/images/knight_w.png)",
+    g1: "url(/images/knight_w.png)",
+    c1: "url(/images/bishop_w.png)",
+    f1: "url(/images/bishop_w.png)",
+    d1: "url(/images/queen_w.png)",
+    e1: "url(/images/king_w.png)",
+    a8: "url(/images/rook_b.png)",
+    h8: "url(/images/rook_b.png)",
+    b8: "url(/images/knight_b.png)",
+    g8: "url(/images/knight_b.png)",
+    c8: "url(/images/bishop_b.png)",
+    f8: "url(/images/bishop_b.png)",
+    d8: "url(/images/queen_b.png)",
+    e8: "url(/images/king_b.png)",
+    a2: "url(/images/pawn_w.png)",
+    b2: "url(/images/pawn_w.png)",
+    c2: "url(/images/pawn_w.png)",
+    d2: "url(/images/pawn_w.png)",
+    e2: "url(/images/pawn_w.png)",
+    f2: "url(/images/pawn_w.png)",
+    g2: "url(/images/pawn_w.png)",
+    h2: "url(/images/pawn_w.png)",
+    a7: "url(/images/pawn_b.png)",
+    b7: "url(/images/pawn_b.png)",
+    c7: "url(/images/pawn_b.png)",
+    d7: "url(/images/pawn_b.png)",
+    e7: "url(/images/pawn_b.png)",
+    f7: "url(/images/pawn_b.png)",
+    g7: "url(/images/pawn_b.png)",
+    h7: "url(/images/pawn_b.png)"
   } 
 
   const horizontalAxis = [8, 7, 6, 5, 4, 3, 2, 1]
@@ -195,7 +128,7 @@ export default function ChessBoard() {
 
       {algebraicNotation.map((element, key) => 
 
-        <Tile key={key} image={piece(element)}>
+        <Tile key={key} image={piecePosition[element as keyof typeof piecePosition]}>
           {element}
         </Tile>
   
