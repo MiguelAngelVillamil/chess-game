@@ -36,13 +36,29 @@ export default function ChessBoard() {
       const minX = reference.offsetLeft;
       const minY = reference.offsetTop;
 
+      const maxX = reference.offsetLeft + reference.clientWidth - 40;
+      const maxY = reference.offsetTop + reference.clientHeight - 40;;
+
       const x = event.clientX - 20;    
       const y = event.clientY - 20;
 
       activePiece.style.position = "absolute";
 
-      activePiece.style.left = x < minX ? `${minX}px` : `${x}px`
-      activePiece.style.top = y < minY ? `${minY}px` : `${y}px`
+      if (x < minX) {
+        activePiece.style.left = `${minX}px`
+      } else if (x > maxX) {
+        activePiece.style.left = `${maxX}px`
+      } else {
+        activePiece.style.left = `${x}px`
+      }
+
+      if (y < minY) {
+        activePiece.style.top = `${minY}px`
+      } else if (y > maxY) {
+        activePiece.style.top = `${maxY}px`
+      } else {
+        activePiece.style.top = `${y}px`
+      }
       
     }
   }
