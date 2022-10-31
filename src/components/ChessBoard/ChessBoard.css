@@ -1,0 +1,14 @@
+.chessBoard {
+  
+
+  display: grid;
+  grid-template-columns: repeat(8, 2.5em);
+  grid-template-rows: repeat(8, 2.5em);
+  
+  max-width: 20em;
+  height: auto;
+
+  background-image: url("../../../public/images/table.jpg");
+  background-repeat: no-repeat;
+  background-size: 20em;
+}

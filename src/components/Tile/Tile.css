@@ -1,0 +1,27 @@
+.tile {
+  display: grid;
+  place-content: center;
+
+  width: 2.5em;
+  height: 2.5em;
+}
+
+.tile img {
+  width: 2.5em;
+}
+
+.tile .piece {
+  width: 2.5em;
+  height: 2.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5em;
+}
+
+.tile .piece:hover {
+  cursor: grab;
+}
+
+.tile .piece:active {
+  cursor: grabbing;
+}
