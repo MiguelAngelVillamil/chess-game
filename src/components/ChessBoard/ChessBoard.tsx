@@ -4,41 +4,7 @@ import "./ChessBoard.css"
 import Tile from "../Tile/Tile";
 import Referee from "../Referee/Referee";
 
-const initialPosition =
-  {  
-    a1: "url(/images/rook_w.png)",
-    h1: "url(/images/rook_w.png)",
-    b1: "url(/images/knight_w.png)",
-    g1: "url(/images/knight_w.png)",
-    c1: "url(/images/bishop_w.png)",
-    f1: "url(/images/bishop_w.png)",
-    d1: "url(/images/queen_w.png)",
-    e1: "url(/images/king_w.png)",
-    a8: "url(/images/rook_b.png)",
-    h8: "url(/images/rook_b.png)",
-    b8: "url(/images/knight_b.png)",
-    g8: "url(/images/knight_b.png)",
-    c8: "url(/images/bishop_b.png)",
-    f8: "url(/images/bishop_b.png)",
-    d8: "url(/images/queen_b.png)",
-    e8: "url(/images/king_b.png)",
-    a2: "url(/images/pawn_w.png)",
-    b2: "url(/images/pawn_w.png)",
-    c2: "url(/images/pawn_w.png)",
-    d2: "url(/images/pawn_w.png)",
-    e2: "url(/images/pawn_w.png)",
-    f2: "url(/images/pawn_w.png)",
-    g2: "url(/images/pawn_w.png)",
-    h2: "url(/images/pawn_w.png)",
-    a7: "url(/images/pawn_b.png)",
-    b7: "url(/images/pawn_b.png)",
-    c7: "url(/images/pawn_b.png)",
-    d7: "url(/images/pawn_b.png)",
-    e7: "url(/images/pawn_b.png)",
-    f7: "url(/images/pawn_b.png)",
-    g7: "url(/images/pawn_b.png)",
-    h7: "url(/images/pawn_b.png)"
-  } 
+import {initialPosition} from "../../data/InitialPocition";
 
 export default function ChessBoard() {
 
@@ -116,10 +82,12 @@ export default function ChessBoard() {
     const x = event.clientX, y = event.clientY;
     const elementMouseIsOver = document.elementsFromPoint(x, y);
     const newTile = elementMouseIsOver[elementMouseIsOver.length - 6].id
+    console.log(document.elementsFromPoint(x, y))
 
     //Casillas individuales
     const newHorizontalTile = Object.assign([], newTile)[0];
     const newVerticalTile = Object.assign([], newTile)[1];
+
 
     if(activePiece?.style.position) {
       activePiece.style.position = ""
@@ -140,8 +108,6 @@ export default function ChessBoard() {
     const referee = new Referee();
     referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, "any")
   }
-
-  
 
   const horizontalAxis = [8, 7, 6, 5, 4, 3, 2, 1]
   const verticalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -164,12 +130,16 @@ export default function ChessBoard() {
       onMouseMove={event => movePiece(event)}
     >
 
-      {algebraicNotation.map((element, key) => 
+      {algebraicNotation.map((element) => 
 
-        <Tile key={key} image={pieces[element as keyof typeof pieces]}>
-          {element}
-        </Tile>
-  
+        <Tile
+          key={element}
+          tile={element}
+          verticalTile={pieces[element as keyof typeof pieces]?.verticalTile}
+          horizontalTile={pieces[element as keyof typeof pieces]?.horizontalTile}
+          image={pieces[element as keyof typeof pieces]?.image}
+          piece={pieces[element as keyof typeof pieces]?.piece}
+        />  
       )}
       
     </div>
