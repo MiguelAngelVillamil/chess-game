@@ -2,6 +2,7 @@ import { MouseEvent, useRef, useState } from "react";
 import "./ChessBoard.css"
 
 import Tile from "../Tile/Tile";
+import Referee from "../Referee/Referee";
 
 const initialPosition =
   {  
@@ -105,27 +106,39 @@ export default function ChessBoard() {
     //Casilla donde estaba la pieza
     const target = event.target as HTMLDivElement
     const previusTile = target.parentElement?.id;
-    //console.log(previusTile);
+
+    //Casillas individuales
+    const previusHorizontalTile = Object.assign([], previusTile)[0];
+    const previusVerticalTile = Object.assign([], previusTile)[1];
+   
 
     //casilla donde queda
     const x = event.clientX, y = event.clientY;
     const elementMouseIsOver = document.elementsFromPoint(x, y);
     const newTile = elementMouseIsOver[elementMouseIsOver.length - 6].id
-    //console.log(newTile)
 
+    //Casillas individuales
+    const newHorizontalTile = Object.assign([], newTile)[0];
+    const newVerticalTile = Object.assign([], newTile)[1];
+
+    if(activePiece?.style.position) {
+      activePiece.style.position = ""
+    }
     
     if (activePiece) {
       activePiece = null;
     }
 
-    
-    setPieces(
-      {
+    if (newTile !== previusTile) {
+      setPieces({
         ...pieces,
         [newTile as keyof typeof pieces]: pieces[previusTile as keyof typeof pieces],
         [previusTile as keyof typeof pieces]: ""
-      }
-    )
+      })
+    }    
+    
+    const referee = new Referee();
+    referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, "any")
   }
 
   
