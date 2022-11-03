@@ -82,11 +82,14 @@ export default function ChessBoard() {
     const x = event.clientX, y = event.clientY;
     const elementMouseIsOver = document.elementsFromPoint(x, y);
     const newTile = elementMouseIsOver[elementMouseIsOver.length - 6].id
-    console.log(document.elementsFromPoint(x, y))
-
+   
+    
     //Casillas individuales
     const newHorizontalTile = Object.assign([], newTile)[0];
     const newVerticalTile = Object.assign([], newTile)[1];
+
+    //pieza
+    const piece = target.id;
 
 
     if(activePiece?.style.position) {
@@ -106,7 +109,7 @@ export default function ChessBoard() {
     }    
     
     const referee = new Referee();
-    referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, "any")
+    referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece)
   }
 
   const horizontalAxis = [8, 7, 6, 5, 4, 3, 2, 1]
