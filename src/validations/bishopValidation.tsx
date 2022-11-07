@@ -6,43 +6,27 @@ export default function bishopValidation(
   newHorizontalTile: string,
   newVerticalTile: number
 ) {
-  
-
-  
+    
+  // Must search for the pieces in the road of our Bishop.
   let moves = Math.abs(previusVerticalTile - newVerticalTile) - 2;
+  let y = Number(previusVerticalTile);
+  let x = verticalAxis.indexOf(previusHorizontalTile);
 
-  let numeric = Number(previusVerticalTile);
-  let letter = verticalAxis.indexOf(previusHorizontalTile);
-
-  console.log(numeric)
-  console.log(letter);
 
   for (let index = 0 ; index <= moves; index++) {
-        
-    
-    
-    if (previusVerticalTile < newVerticalTile) {
-      numeric++ 
-    } else {
-      numeric--
-    }
+      
+    // Saving if we move to + or to -.
+    previusVerticalTile < newVerticalTile ? y++ : y--;
 
-    if (verticalAxis.indexOf(previusHorizontalTile) < verticalAxis.indexOf(newHorizontalTile)) {
-      letter++;
-    } else {
-      letter--;
-    }
+    // Saving if we move to left or to right.
+    verticalAxis.indexOf(previusHorizontalTile) < verticalAxis.indexOf(newHorizontalTile) ? x++ : x--;
 
-    console.log(numeric);
-    console.log(letter);
-
-
-    if (!document.getElementById((verticalAxis[letter] + numeric).toString())?.children.length) continue;
+    // When we don't find pieces.
+    if (!document.getElementById((verticalAxis[x] + y).toString())?.children.length) continue;
     else return false;
 
   }
 
   return Math.abs(newVerticalTile - previusVerticalTile) === Math.abs(verticalAxis.indexOf(newHorizontalTile) - verticalAxis.indexOf(previusHorizontalTile))
     
-  
 }
