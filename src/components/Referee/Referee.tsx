@@ -23,6 +23,9 @@ export default class Referee {
 
       case "ROOK":
       return rookValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+
+      case "QUEEN":
+      return bishopValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile) || rookValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
     }
   }
 }
