@@ -1,5 +1,6 @@
 import bishopValidation from "../../validations/bishopValidation";
 import pawnValidation from "../../validations/pawnValidation";
+import rookValidation from "../../validations/rookValidation";
 
 export default class Referee {
  
@@ -18,7 +19,10 @@ export default class Referee {
       return pawnValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, color);
 
       case "BISHOP":
-      return bishopValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile)
+      return bishopValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+
+      case "ROOK":
+      return rookValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
     }
   }
 }
