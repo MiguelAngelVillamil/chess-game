@@ -1,10 +1,11 @@
 import bishopValidation from "../../validations/bishopValidation";
+import kingValidation from "../../validations/kingValidation";
 import pawnValidation from "../../validations/pawnValidation";
+import queenValidation from "../../validations/queenValidation";
 import rookValidation from "../../validations/rookValidation";
 
 export default class Referee {
  
-  
   isValidMove(
     previusHorizontalTile: string,
     previusVerticalTile: number,
@@ -25,7 +26,10 @@ export default class Referee {
       return rookValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
 
       case "QUEEN":
-      return bishopValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile) || rookValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+      return queenValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+
+      case "KING":
+      return kingValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
     }
   }
 }
