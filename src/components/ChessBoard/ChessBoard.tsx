@@ -68,10 +68,18 @@ export default function ChessBoard() {
   }
 
   const dropPiece = (event: MouseEvent) => {
+    
+    const target = event.target as HTMLDivElement
+    
+    //pieza
+    const piece = target.id.split(" ")[0];
+
+    //color
+    const color = target.id.split(" ")[1]
 
     //Casilla donde estaba la pieza
-    const target = event.target as HTMLDivElement
     const previusTile = target.parentElement?.id;
+    
 
     //Casillas individuales
     const previusHorizontalTile = Object.assign([], previusTile)[0];
@@ -88,9 +96,6 @@ export default function ChessBoard() {
     const newHorizontalTile = Object.assign([], newTile)[0];
     const newVerticalTile = Object.assign([], newTile)[1];
 
-    //pieza
-    const piece = target.id;
-
 
     if(activePiece?.style.position) {
       activePiece.style.position = ""
@@ -100,7 +105,10 @@ export default function ChessBoard() {
       activePiece = null;
     }
 
-    if (newTile !== previusTile) {
+    const referee = new Referee();
+    const validate = referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece, color)
+
+    if (validate && newTile !== previusTile) {
       setPieces({
         ...pieces,
         [newTile as keyof typeof pieces]: pieces[previusTile as keyof typeof pieces],
@@ -108,8 +116,6 @@ export default function ChessBoard() {
       })
     }    
     
-    const referee = new Referee();
-    referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece)
   }
 
   const horizontalAxis = [8, 7, 6, 5, 4, 3, 2, 1]
@@ -138,8 +144,7 @@ export default function ChessBoard() {
         <Tile
           key={element}
           tile={element}
-          verticalTile={pieces[element as keyof typeof pieces]?.verticalTile}
-          horizontalTile={pieces[element as keyof typeof pieces]?.horizontalTile}
+          color={pieces[element as keyof typeof pieces]?.color}
           image={pieces[element as keyof typeof pieces]?.image}
           piece={pieces[element as keyof typeof pieces]?.piece}
         />  

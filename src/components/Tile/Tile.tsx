@@ -5,19 +5,17 @@ type TileProps = {
   tile: string;
   image: string;
   piece: string;
-  verticalTile: string;
-  horizontalTile: number;
+  color: string;
 };
 
-export default function Tile({ tile, image, piece, verticalTile, horizontalTile}: TileProps) {
-
+export default function Tile({ tile, image, piece, color }: TileProps) {
 
   return (
     <div className="tile" id={tile} typeof={piece}>
 
       {image && 
       <div
-      id={piece}
+      id={piece + " " + color}
       className="piece"
       style={{backgroundImage: `${image}`}}
       ></div>
