@@ -1,4 +1,5 @@
 import bishopValidation from "../../validations/bishopValidation";
+import knightValidation from "../../validations/knightValidation";
 import kingValidation from "../../validations/kingValidation";
 import pawnValidation from "../../validations/pawnValidation";
 import queenValidation from "../../validations/queenValidation";
@@ -30,6 +31,9 @@ export default class Referee {
 
       case "KING":
       return kingValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+
+      case "KNIGHT":
+      return knightValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
     }
   }
 }
