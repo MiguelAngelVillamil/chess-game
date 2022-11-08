@@ -1,6 +1,6 @@
 const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-export default function knightValidation(
+export function knightValidation(
   previusHorizontalTile: string,
   previusVerticalTile: number,
   newHorizontalTile: string,

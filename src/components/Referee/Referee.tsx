@@ -1,5 +1,5 @@
 import bishopValidation from "../../validations/bishopValidation";
-import knightValidation from "../../validations/knightValidation";
+import { knightValidation } from "../../validations/knightValidation";
 import kingValidation from "../../validations/kingValidation";
 import pawnValidation from "../../validations/pawnValidation";
 import queenValidation from "../../validations/queenValidation";
