@@ -30,7 +30,7 @@ export default class Referee {
       return queenValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
 
       case "KING":
-      return kingValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
+      return kingValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, color);
 
       case "KNIGHT":
       return knightValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile);
