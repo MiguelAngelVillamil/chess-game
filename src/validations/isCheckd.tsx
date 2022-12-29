@@ -1,15 +1,10 @@
-import Referee from "../components/Referee/Referee";
+import isValidMove from "../components/Referee/Referee";
 
-
-
-export default function isChecked(newHorizontalTile: string, newVerticalTile: number, ourColor: string | undefined) {
-
-  let newHorizontalKingTile = newHorizontalTile;
-  let newVerticalKingTile = newVerticalTile;
-
-  let flag: boolean[] = [];
+export default function isChecked(ourColor: string | undefined) {
 
   let tilesArray = Object.assign([], document.getElementsByClassName("tile"));
+
+  let piecesTilesArray: string[] = [];
 
   tilesArray.forEach((element: HTMLDivElement) => {
 
@@ -24,51 +19,61 @@ export default function isChecked(newHorizontalTile: string, newVerticalTile: nu
       let attackingPiece = pieceAndColor.split(" ")[0]; // For example: "PAWN"
       let color = pieceAndColor.split(" ")[1]; // For example: "black"
 
-      // We must check only the tiles pawn can take. 
-      if (ourColor !== color && attackingPiece === "PAWN") {
+      
+      if (ourColor === color) {
 
-        const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+        tilesArray.forEach((element: HTMLDivElement) => {
+          // Work with all tiles.
+          let newTile = element.id; // For example: "e7"
+          let newHorizontalTile = newTile.charAt(0); // For example: "e"
+          let newVerticalTile = Number(newTile.charAt(1)); // For example: 7
+          
+          if (attackingPiece === "PAWN") {
+            
+            const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+      
+            let xMovement = previusVerticalTile - newVerticalTile;
+            let yMovement = Math.abs(Number(verticalAxis.indexOf(previusHorizontalTile)) - Number(verticalAxis.indexOf(newHorizontalTile)));
+      
+            // Here we check only the tiles pawn can take (taking the color into account).
+            if (color === "black" && yMovement === 1 && xMovement === 1) {
+              piecesTilesArray.push(`${(verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) + 1] ) + (previusVerticalTile - 1)}`)
+              piecesTilesArray.push(`${(verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) - 1] ) + (previusVerticalTile - 1)}`)
+            }
+            if (color === "white" && yMovement === 1 && xMovement === -1) {
+              piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) + 1] + (previusVerticalTile + 1)}`);
+              piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) - 1] + (previusVerticalTile + 1)}`);
+            }
 
-        let xMovement = previusVerticalTile - newVerticalKingTile;
-        let yMovement = Math.abs(Number(verticalAxis.indexOf(previusHorizontalTile)) - Number(verticalAxis.indexOf(newHorizontalTile)));
+          } else if (attackingPiece === "KING") {
 
-        
-        // Here we check only the tiles pawn can take (taking the color into account).
-        if (color === "black" && yMovement === 1 && xMovement === 1) flag.push(true);
-        if (color === "white" && yMovement === 1 && xMovement === -1) flag.push(true);
-      }
+            const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+            
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) + 1] + (previusVerticalTile + 1)}`);
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) + 1] + (previusVerticalTile - 1)}`);
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) + 1] + (previusVerticalTile)}`);
 
-      if (ourColor !== color && attackingPiece === "KING") {
-        
-        // const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) - 1] + (previusVerticalTile + 1)}`);
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) - 1] + (previusVerticalTile - 1)}`);
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile)) - 1] + (previusVerticalTile)}`);
 
-        // let xMovement = Math.abs(previusVerticalTile - newVerticalKingTile);
-        // let yMovement = Math.abs(Number(verticalAxis.indexOf(previusHorizontalTile)) - Number(verticalAxis.indexOf(newHorizontalTile)));
-
-        // // Here we check only the tiles pawn can take.
-        // if (yMovement === 1 && xMovement === 1) flag.push(true);
-
-        const verticalAxis: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
-        
-        let xMovement = Math.abs(previusVerticalTile - newVerticalKingTile);
-        let yMovement = Math.abs(Number(verticalAxis.indexOf(previusHorizontalTile)) - Number(verticalAxis.indexOf(newHorizontalKingTile)));
-
-        // Here we check only the tiles pawn can take (taking the color into account).
-        if (yMovement <= 1 && xMovement <= 1) flag.push(true);
-      }
-    
-  
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile))] + (previusVerticalTile + 1)}`);
+            piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile))] + (previusVerticalTile - 1)}`);
+            //piecesTilesArray.push(`${verticalAxis[Number(verticalAxis.indexOf(previusHorizontalTile))] + (previusVerticalTile)}`);
       
 
-      if (ourColor !== color && attackingPiece !== "KING" && attackingPiece !== "PAWN") {
-        var referee = new Referee();
-        
-        if (referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalKingTile, newVerticalKingTile, attackingPiece, color)) {
-          flag.push(true);
-        }
-      }
-    }
-  });
+          } else {
 
-  return !flag.includes(true);  
+            if (isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, attackingPiece, color)) {
+              piecesTilesArray.push(newTile);
+            }
+          }
+        });
+      }
+    } 
+  });
+  let aa = new Set(piecesTilesArray)
+  let bb = Array.from(aa);
+  bb = bb.filter(tile => tile !== "NaN")
+  return bb;
 }

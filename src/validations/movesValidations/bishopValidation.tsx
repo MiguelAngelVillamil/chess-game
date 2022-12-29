@@ -6,7 +6,7 @@ export default function bishopValidation(
   newHorizontalTile: string,
   newVerticalTile: number
 ) {
-    
+
   // Must search for the pieces in the road of our Bishop.
   let moves = Math.abs(previusVerticalTile - newVerticalTile) - 2;
   let y = Number(previusVerticalTile);

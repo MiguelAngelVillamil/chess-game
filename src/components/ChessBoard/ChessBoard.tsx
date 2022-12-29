@@ -1,19 +1,25 @@
-import { MouseEvent, useRef, useState } from "react";
+import { MouseEvent, useRef, useState, useEffect } from "react";
 import "./ChessBoard.css"
 
 import Tile from "../Tile/Tile";
-import Referee from "../Referee/Referee";
 
-import {initialPosition} from "../../data/InitialPocition";
+import { initialPosition } from "../../data/InitialPocition";
+import isValidMove from "../Referee/Referee";
+import turnCatcher from "../TurnCatcher/turnCatcher";
+import kingIsInTrouble from "../../validations/kingIsInTrouble";
+import isChecked from "../../validations/isCheckd";
 
 export default function ChessBoard() {
-
 
   const chessBoardRef = useRef<HTMLDivElement>(null);
 
   const [pieces, setPieces] = useState(initialPosition);
+  const [moves, setMoves] = useState(0);
+  const [checkedTiles, setCheckedTiles] = useState<string[]>([]);
 
   let activePiece: HTMLElement | null = null;
+
+  /////////////////////////////////////////////////////////////////
 
   const grabPiece = (event: MouseEvent) => {
     const element = event.target as HTMLElement;
@@ -28,15 +34,17 @@ export default function ChessBoard() {
       element.style.top = `${y}px`;
 
       activePiece = element;
+
     }
+    
   }
-
+  
   const movePiece = (event: MouseEvent) => {
-
+    
     const reference = chessBoardRef.current
-
+    
     if (activePiece && reference) {
-
+      
       const minX = reference.offsetLeft;
       const minY = reference.offsetTop;
 
@@ -63,7 +71,6 @@ export default function ChessBoard() {
       } else {
         activePiece.style.top = `${y}px`
       }
-      
     }
   }
 
@@ -105,10 +112,19 @@ export default function ChessBoard() {
       activePiece = null;
     }
 
-    const referee = new Referee();
-    const validate = referee.isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece, color)
+    //Debo buscar la manera de hacer que cada pieza que se mueva valide si el rey entra en jaque
+    
 
-    if (validate && newTile !== previusTile) {
+    const validate = 
+    isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece, color)
+    && kingIsInTrouble(checkedTiles, color)
+    && turnCatcher(color, moves)
+    
+
+    if (validate) {
+      setMoves(moves + 1);
+      console.log("actualizado")
+      setCheckedTiles(isChecked(color));
       setPieces({
         ...pieces,
         [newTile as keyof typeof pieces]: pieces[previusTile as keyof typeof pieces],
@@ -117,11 +133,13 @@ export default function ChessBoard() {
     }    
     
   }
+  
+  /////////////////////////////////////////////////////////////////
+
+  const algebraicNotation: string[] = [];
 
   const horizontalAxis = [8, 7, 6, 5, 4, 3, 2, 1]
   const verticalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"]
-
-  const algebraicNotation: string[] = [];
   
   horizontalAxis.forEach((number)=> {
     verticalAxis.forEach((letter) => {
