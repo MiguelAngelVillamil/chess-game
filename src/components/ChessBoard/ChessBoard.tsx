@@ -80,7 +80,7 @@ export default function ChessBoard() {
     
     //pieza
     const piece = target.id.split(" ")[0];
-
+  
     //color
     const color = target.id.split(" ")[1]
 
@@ -117,14 +117,13 @@ export default function ChessBoard() {
 
     const validate = 
     isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece, color)
-    && kingIsInTrouble(checkedTiles, color)
+    // && kingIsInTrouble(checkedTiles, color)
     && turnCatcher(color, moves)
     
 
     if (validate) {
       setMoves(moves + 1);
-      console.log("actualizado")
-      setCheckedTiles(isChecked(color));
+      // setCheckedTiles(isChecked(color));
       setPieces({
         ...pieces,
         [newTile as keyof typeof pieces]: pieces[previusTile as keyof typeof pieces],

@@ -1,4 +1,3 @@
-//import { ReactNode } from "react";
 import "./Tile.css";
 
 type TileProps = {
@@ -11,13 +10,13 @@ type TileProps = {
 export default function Tile({ tile, image, piece, color }: TileProps) {
 
   return (
+
     <div className="tile" id={tile} typeof={piece}>
 
-      {image && 
-      <div
-      id={piece + " " + color}
-      className="piece"
-      style={{backgroundImage: `${image}`}}
+      {image && <div
+        id={piece + " " + color}
+        className="piece"
+        style={{backgroundImage: `${image}`}}
       ></div>
       }
       

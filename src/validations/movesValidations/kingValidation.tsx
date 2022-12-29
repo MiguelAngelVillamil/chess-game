@@ -15,8 +15,8 @@ export default function kingValidation(
     
     if (queenValidation(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile)) {
 
-      return !isChecked(color).includes(`${newHorizontalTile + newVerticalTile}`);
-
+      // return !isChecked(color).includes(`${newHorizontalTile + newVerticalTile}`);
+      return true;
     }
     
   }
