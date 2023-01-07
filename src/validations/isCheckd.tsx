@@ -6,6 +6,8 @@ export default function isChecked(ourColor: string | undefined) {
 
   let piecesTilesArray: string[] = [];
 
+  let pieces: {tile: string, piece:string}[] = [];
+
   tilesArray.forEach((element: HTMLDivElement) => {
 
     // Only work with the tiles that have a piece inside.
@@ -18,7 +20,7 @@ export default function isChecked(ourColor: string | undefined) {
       let pieceAndColor = element.children[0].id; // For example: "PAWN black"
       let attackingPiece = pieceAndColor.split(" ")[0]; // For example: "PAWN"
       let color = pieceAndColor.split(" ")[1]; // For example: "black"
-
+      if(attackingPiece.length > 2) pieces.push({tile, piece: attackingPiece});
       
       if (ourColor === color) {
 
@@ -72,6 +74,9 @@ export default function isChecked(ourColor: string | undefined) {
       }
     } 
   });
+
+  console.log("Pieces in isChecked")
+  console.table(pieces, ["piece", "tile"])
   let aa = new Set(piecesTilesArray)
   let bb = Array.from(aa);
   bb = bb.filter(tile => tile !== "NaN")

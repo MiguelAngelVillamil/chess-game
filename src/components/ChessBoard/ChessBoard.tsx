@@ -123,6 +123,8 @@ export default function ChessBoard() {
     // && kingIsInTrouble(checkedTiles, color)
     && turnCatcher(color, moves)
     
+    console.log("Checked tiles en chessboard")
+    console.table(pieces)
 
     if (validate) {
       setMoves(moves + 1);
@@ -143,7 +145,6 @@ export default function ChessBoard() {
   }, [pieces])
 
   const fillCheckedTiles = (tiles: string[]) => {
-    console.table(tiles)
     chessBoardRef.current?.childNodes.forEach(node => {
       let tile = node as HTMLDivElement;
       tile.style.backgroundColor = tiles.includes(tile.id)? "#ff000050" : "transparent"
