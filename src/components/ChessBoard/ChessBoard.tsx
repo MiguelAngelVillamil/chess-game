@@ -16,24 +16,26 @@ export default function ChessBoard() {
   const [pieces, setPieces] = useState(initialPosition);
   const [moves, setMoves] = useState(0);
   const [checkedTiles, setCheckedTiles] = useState<string[]>([]);
+  const [color, setColor] = useState('black')
 
   let activePiece: HTMLElement | null = null;
 
   /////////////////////////////////////////////////////////////////
 
   const grabPiece = (event: MouseEvent) => {
-    const element = event.target as HTMLElement;
+    const target = event.target as HTMLElement;
 
-    if (element.classList.contains("piece")) {
+    
+    if (target.classList.contains("piece")) {
 
       const x = event.clientX - 20;    
       const y = event.clientY - 20;
 
-      element.style.position = "absolute";
-      element.style.left = `${x}px`;
-      element.style.top = `${y}px`;
+      target.style.position = "absolute";
+      target.style.left = `${x}px`;
+      target.style.top = `${y}px`;
 
-      activePiece = element;
+      activePiece = target;
 
     }
     
@@ -83,7 +85,9 @@ export default function ChessBoard() {
   
     //color
     const color = target.id.split(" ")[1]
-
+    
+    if (!color) return
+    setColor(color)
     //Casilla donde estaba la pieza
     const previusTile = target.parentElement?.id;
     
@@ -114,7 +118,6 @@ export default function ChessBoard() {
 
     //Debo buscar la manera de hacer que cada pieza que se mueva valide si el rey entra en jaque
     
-
     const validate = 
     isValidMove(previusHorizontalTile, previusVerticalTile, newHorizontalTile, newVerticalTile, piece, color)
     // && kingIsInTrouble(checkedTiles, color)
@@ -129,8 +132,22 @@ export default function ChessBoard() {
         [newTile as keyof typeof pieces]: pieces[previusTile as keyof typeof pieces],
         [previusTile as keyof typeof pieces]: ""
       })
+      
     }    
-    
+
+  }
+
+  useEffect(() => {
+    setCheckedTiles(isChecked(color))
+    fillCheckedTiles(isChecked(color))
+  }, [pieces])
+
+  const fillCheckedTiles = (tiles: string[]) => {
+    console.table(tiles)
+    chessBoardRef.current?.childNodes.forEach(node => {
+      let tile = node as HTMLDivElement;
+      tile.style.backgroundColor = tiles.includes(tile.id)? "#ff000050" : "transparent"
+    })
   }
   
   /////////////////////////////////////////////////////////////////
